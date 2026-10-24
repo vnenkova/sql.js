@@ -49,3 +49,10 @@
     --bs-btn-disabled-bg: #E8B4C8;
     --bs-btn-disabled-border-color: #E8B4C8;
 }
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    border-color: #E8B4C8;
+    box-shadow: 0 0 0 0.25rem rgba(232, 180, 200, 0.35);
+}

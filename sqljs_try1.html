@@ -9,81 +9,89 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="text-center my-4">Sql.js mini project</h1>
-      <div class="accordion shadow" id="accordionExample">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              <i class="bi bi-1-circle-fill me-1"></i>ПРИМЕР С ИМПОРТИРАНА SQLITE БД
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <div class="mb-4">
-                  <label for="db_file" class="form-label">Импортиране на SQLite БД</label>
-                  <input 
-                    type="file"
-                    id="db_file"
-                    class="form-control"
-                    accept=".db, .sqlite, .sqlite3">
-                </div>
-                <div class="mb-3">
-                  <label for="sql_query">SQL заявка</label>
-                  <textarea 
-                    name="" 
-                    id="sql_query"
-                    class="form-control font-monospace"
-                    rows="6"
-                    placeholder="Въведете SQL заявка тук..."></textarea>
-                </div>
-                <div class="invalid-feedback d-block mb-2" id="missingDbErrorContainer"></div>
-                <button
-                  type="button"
-                  id="run_query"
-                  class="btn btn-pink">
-                  <i class="bi bi-play-fill"></i>
-                  Изпълни заявката
+      <div class="card my-5 shadow rounded rounded-5">
+        <div class="card-header rounded rounded-5 rounded-bottom-0">
+          <h1 class="text-center my-4">Sql.js mini project</h1>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <i class="bi bi-1-circle-fill me-1"></i>ПРИМЕР С ИМПОРТИРАНА SQLITE БД
                 </button>
-                <div id="results2" class="mt-3">
-                  <div class="d-none">Резултати от SQLite БД:</div>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="mb-4">
+                      <label for="db_file" class="form-label">Импортиране на SQLite БД:</label>
+                      <input 
+                        type="file"
+                        id="db_file"
+                        class="form-control"
+                        accept=".db, .sqlite, .sqlite3">
+                    </div>
+                    <div class="mb-3">
+                      <label for="sql_query">SQL заявка:</label>
+                      <textarea 
+                        name="" 
+                        id="sql_query"
+                        class="form-control font-monospace"
+                        rows="6"
+                        placeholder="Въведете SQL заявка тук..."></textarea>
+                    </div>
+                    <div class="invalid-feedback d-block mb-2" id="missingDbErrorContainer"></div>
+                    <button
+                      type="button"
+                      id="run_query"
+                      class="btn btn-pink rounded-pill">
+                      <i class="bi bi-play-fill"></i>
+                      Изпълни заявката
+                    </button>
+                    <div id="results2" class="mt-3">
+                      <div class="d-none">Резултати от SQLite БД:</div>
+                    </div>
                 </div>
+              </div>
             </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <i class="bi bi-2-circle-fill me-1"></i>ПРИМЕР С ХАРДКОДНАТИ БД И ЗАЯВКИ
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <label for="sql_query_hardcoded" class="form-label">Хардкодната заявка:</label>
+                    <textarea 
+                      name="" 
+                      id="sql_query_hardcoded"
+                      rows="6"
+                      class="form-control font-monospace"
+                      disabled></textarea>
+                    <div id="results1" class="mt-3">
+                      <div>Резултати от хардкоднатата БД:</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Accordion Item #3
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div> -->
           </div>
         </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              <i class="bi bi-2-circle-fill me-1"></i>ПРИМЕР С ХАРДКОДНАТИ БД И ЗАЯВКИ
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <label for="sql_query_hardcoded" class="form-label">Хардкодната заявка:</label>
-                <textarea 
-                  name="" 
-                  id="sql_query_hardcoded"
-                  rows="6"
-                  class="form-control font-monospace"
-                  disabled></textarea>
-                <div id="results1" class="mt-3">
-                  <div>Резултати от хардкоднатата БД:</div>
-                </div>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              Accordion Item #3
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-            </div>
-          </div>
-        </div> -->
       </div>
+      
+      
 
       
     </div>
