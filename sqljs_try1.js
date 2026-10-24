@@ -43,13 +43,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const table = document.createElement('table');
-            table.className = "table table-info table-bordered table-striped table-hover";
+            table.className = "table table-pink table-bordered table-striped table-hover";
 
             const responsiveDiv = document.createElement('div');
             responsiveDiv.classList.add('table-responsive');
 
             const thead = document.createElement('thead');
-            thead.className = "table-dark"
+            thead.className = "table-pink-header"
 
             const headerRow = document.createElement('tr');
             
@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         dbErrorContainer.innerText = "Моля, въведете заявка за изпълнение!";
                         sqlQueryTextarea.classList.add('is-invalid');
                     } else {
+                       resultsContainer2.classList.remove('d-none');
                        sqlQueryTextarea.classList.remove('is-invalid');  
 
                        const query = sqlQueryTextarea.value;
@@ -142,10 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
                        const responsiveDiv_sqlite = document.createElement('div');
 
                        responsiveDiv_sqlite.classList.add('table-responsive');
-                       table_sqlite.className = "table table-success table-bordered table-striped table-hover";
+                       table_sqlite.className = "table table-pink table-bordered table-striped table-hover";
 
                        const thead_sqlite = document.createElement('thead');
-                       thead_sqlite.className = "table-dark";
+                       thead_sqlite.className = "table-pink-header";
 
                        const headerRow_sqlite = document.createElement('tr');
 
