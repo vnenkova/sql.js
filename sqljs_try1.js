@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	async function main() {
             //Вар 1 - с хардкодната база--------------------------------------------
 
-            const SQL1 = await initSqlJs({
+            const SQL = await initSqlJs({ //initiazling the library
                 locateFile: file =>
                     `https://sql.js.org/dist/${file}`
             });
 
-            const db1 = new SQL1.Database(); //new empty db created in memory
+            const db1 = new SQL.Database(); //new empty db created in memory
             
             db1.run(`
                 CREATE TABLE students (
@@ -84,11 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             //Вар. 2 - с импортирана БД--------------------------------------------------------
-            const SQL2 = await initSqlJs({
-                locateFile: file =>
-                    `https://sql.js.org/dist/${file}`
-            });
-
             let db2 = null;
 
             const fileInput = document.querySelector('#db_file');
@@ -103,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 //what happens when reading the file finishes:
                 reader.onload = function () {
                     const Uints = new Uint8Array(reader.result);
-                    db2 = new SQL2.Database(Uints);
+                    db2 = new SQL.Database(Uints);
                 }
 
                 //start reading the file
@@ -132,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
                        const query = sqlQueryTextarea.value;
                        const results_sqlite =  db2.exec(query);
 
-                       console.log(results_sqlite);
+                       // console.log(results_sqlite);
 
                        if (results_sqlite.length === 0) {   
                         resultsContainer2.innerText = "Няма налични резултати.";
@@ -181,10 +176,82 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             });
-            
 
-            // console.log(results2);
+            //Вар. 3 - с модифициране и експортиране на импортирана БД--------------------------------------------------------
+            let db3 = null;
+            const fileInput2 = document.querySelector('#db_file_2');
+            fileInput2.addEventListener('change', function () {
+                const file = this.files[0];
 
+                if (!file) {
+                    return;
+                }
+
+                const reader = new FileReader();
+                //what happens when reading the file finishes:
+                reader.onload = function () {
+                    const Uints = new Uint8Array(reader.result);
+                    db3 = new SQL.Database(Uints);
+                }
+
+                //start reading the file
+                reader.readAsArrayBuffer(file);
+            });
+
+            const dbErrorContainer2 = document.querySelector('#missingDbErrorContainer2');
+            const sqlQueryTextarea2 = document.querySelector('#sql_query_2');
+            const resultsContainer3 = document.querySelector('#results3');
+
+            document.querySelector('#run_query_2').addEventListener('click', function () {
+                if (!db3) {
+                    dbErrorContainer2.innerText = "Моля, първо прикачете файл с БД!";
+                    fileInput2.classList.add('is-invalid');
+                } else {
+                    dbErrorContainer2.innerText = "";
+                    fileInput2.classList.remove('is-invalid');
+
+                    if (sqlQueryTextarea2.value == "") {
+                        dbErrorContainer2.innerText = "Моля, въведете заявка за изпълнение!";
+                        sqlQueryTextarea2.classList.add('is-invalid');
+                    } else {
+                       resultsContainer3.classList.remove('d-none');
+                       sqlQueryTextarea2.classList.remove('is-invalid');  
+
+                       const query = sqlQueryTextarea2.value;
+
+                        if (query) {
+                            db3.exec(query);
+                        }
+
+                        const data = db3.export();
+                        const blob = new Blob([data], {
+                            type: "application/x-sqlite3",
+                        });
+
+                        const url = URL.createObjectURL(blob);
+
+                        const downloadBtn = document.createElement('button');
+                        const icon = document.createElement('i');
+
+                        icon.className = "bi bi-download me-1";
+                        downloadBtn.className = "btn btn-pink rounded-pill";
+                        downloadBtn.append(icon, "Изтегли новата БД");
+
+                        document.querySelector('#twoBtnsDiv').appendChild(downloadBtn);
+
+                        downloadBtn.addEventListener('click', function () {
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = "new_database.db";
+
+                            a.click();
+                            URL.revokeObjectURL(url);
+                        });
+
+                       resultsContainer3.innerText = "Заявката е успешно изпълнена! Можете да изтеглите новата БД!";
+                    }
+                }
+            });
         }
 
         main().catch(console.error);
