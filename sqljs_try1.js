@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         downloadBtn.addEventListener('click', function () {
                             const a = document.createElement('a');
                             a.href = url;
-                            a.download = "new_database.db";
+                            a.download = "new_modified_database.db";
 
                             a.click();
                             URL.revokeObjectURL(url);
@@ -250,6 +250,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
                        resultsContainer3.innerText = "Заявката е успешно изпълнена! Можете да изтеглите новата БД!";
                     }
+                }
+            });
+
+            //Вар. 4 - със създаване и експортиране на импортирана БД--------------------------------------------------------
+            let db4 = new SQL.Database();
+
+            const dbErrorContainer3 = document.querySelector('#missingDbErrorContainer3');
+            const sqlQueryTextarea3 = document.querySelector('#sql_query_3');
+            const resultsContainer4 = document.querySelector('#results4');
+
+            document.querySelector('#run_query_3').addEventListener('click', function () {
+                if (sqlQueryTextarea3.value == "") {
+                     dbErrorContainer3.classList.remove('d-none');
+                     dbErrorContainer3.innerText = "Моля, въведете заявка за изпълнение!";
+                     sqlQueryTextarea3.classList.add('is-invalid');
+                } else {
+                    dbErrorContainer3.classList.add('d-none');
+                    resultsContainer4.classList.remove('d-none');
+                    sqlQueryTextarea3.classList.remove('is-invalid');
+
+                    const query = sqlQueryTextarea3.value; //can be both creation of several tables + insertion of values
+
+                    if (query) {
+                        db4.run(query);
+                    }
+
+                    const data = db4.export();
+                    const blob = new Blob([data], {
+                        type: "application/x-sqlite3",
+                    });
+
+                    const url = URL.createObjectURL(blob);
+
+                    const downloadBtn = document.createElement('button');
+                    const icon = document.createElement('i');
+
+                    icon.className = "bi bi-download me-1";
+                    downloadBtn.className = "btn btn-pink rounded-pill";
+                    downloadBtn.append(icon, "Изтегли новата БД");
+
+                    document.querySelector('#twoBtnsDiv2').appendChild(downloadBtn);
+
+                    downloadBtn.addEventListener('click', function () {
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = "new_created_database.db";
+
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    });
+
+                    resultsContainer4.innerText = "Заявката е успешно изпълнена! Можете да изтеглите новата БД!";
                 }
             });
         }
