@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            //Вар. 4 - със създаване и експортиране на импортирана БД--------------------------------------------------------
+            //Вар. 4 - със създаване и експортиране на БД--------------------------------------------------------
             let db4 = new SQL.Database();
 
             const dbErrorContainer3 = document.querySelector('#missingDbErrorContainer3');
